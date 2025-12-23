@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
 import { createUser, updateUser } from "@/features/user/actions";
-import { SelectUser } from "@/db/schema";
+import { TSelectUser } from "@/db/schema";
 
 const formSchema = z.object({
   email: z
@@ -28,12 +28,12 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-type Props = {
-  user?: SelectUser;
+type UserFormProps = {
+  user?: TSelectUser;
   onComplete: () => void;
 };
 
-export default function UserForm({ user, onComplete }: Props) {
+export default function UserForm({ user, onComplete }: UserFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const { control, handleSubmit, reset } = useForm<FormData>({
@@ -55,12 +55,12 @@ export default function UserForm({ user, onComplete }: Props) {
       }
 
       toast.success(`User ${user ? "updated" : "created"}`);
-
       reset();
     } catch (e) {
       toast.error((e as Error).message);
     } finally {
       setIsLoading(false);
+
       onComplete();
     }
   };

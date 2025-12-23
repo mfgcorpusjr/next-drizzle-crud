@@ -1,5 +1,8 @@
+import { Suspense } from "react";
+
 import UsersTable from "@/features/user/components/UsersTable";
-import AddUserButton from "@/features/user/components/AddUserButton";
+import CreateUserButton from "@/features/user/components/CreateUserButton";
+import Loader from "@/components/Loader";
 
 export default function HomePage() {
   return (
@@ -7,10 +10,12 @@ export default function HomePage() {
       <div className="flex justify-between mb-4">
         <h1 className="text-2xl font-bold tracking-tight">Users</h1>
 
-        <AddUserButton />
+        <CreateUserButton />
       </div>
 
-      <UsersTable />
+      <Suspense fallback={<Loader />}>
+        <UsersTable />
+      </Suspense>
     </div>
   );
 }

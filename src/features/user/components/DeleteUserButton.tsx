@@ -36,6 +36,7 @@ export default function DeleteUserButton({ userId }: Props) {
       toast.error((e as Error).message);
     } finally {
       setIsLoading(false);
+
       setIsOpen(false);
     }
   };

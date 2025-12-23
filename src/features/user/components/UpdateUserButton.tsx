@@ -14,10 +14,10 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-import { SelectUser } from "@/db/schema";
+import { TSelectUser } from "@/db/schema";
 
 type Props = {
-  user: SelectUser;
+  user: TSelectUser;
 };
 
 export default function UpdateUserButton({ user }: Props) {

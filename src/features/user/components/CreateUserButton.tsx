@@ -14,19 +14,19 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-export default function AddUserButton() {
+export default function CreateUserButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button>
-          <LucideUserPlus /> Add User
+          <LucideUserPlus /> Create User
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add User</DialogTitle>
+          <DialogTitle>Create User</DialogTitle>
           <DialogDescription />
         </DialogHeader>
 

@@ -1,10 +1,11 @@
 import {
   Table,
-  TableBody,
-  TableCell,
-  TableHead,
   TableHeader,
   TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableCaption,
 } from "@/components/ui/table";
 import UpdateUserButton from "@/features/user/components/UpdateUserButton";
 import DeleteUserButton from "@/features/user/components/DeleteUserButton";
@@ -24,6 +25,7 @@ export default async function UsersTable() {
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
+
       <TableBody>
         {users?.map((user) => (
           <TableRow key={user.id}>
@@ -37,6 +39,8 @@ export default async function UsersTable() {
           </TableRow>
         ))}
       </TableBody>
+
+      {users.length === 0 && <TableCaption>No data available</TableCaption>}
     </Table>
   );
 }

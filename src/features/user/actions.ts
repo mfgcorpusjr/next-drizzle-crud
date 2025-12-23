@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { desc, eq } from "drizzle-orm";
 
 import { db } from "@/db/drizzle";
-import { users, InsertUser, SelectUser } from "@/db/schema";
+import { users, TInsertUser } from "@/db/schema";
 
 export const getUsers = async () => {
   try {
@@ -15,7 +15,7 @@ export const getUsers = async () => {
   }
 };
 
-export const createUser = async (user: InsertUser) => {
+export const createUser = async (user: TInsertUser) => {
   try {
     await db.insert(users).values(user);
     revalidatePath("/");
@@ -24,10 +24,7 @@ export const createUser = async (user: InsertUser) => {
   }
 };
 
-export const updateUser = async (
-  id: string,
-  user: Omit<SelectUser, "id" | "createdAt" | "updatedAt">
-) => {
+export const updateUser = async (id: string, user: TInsertUser) => {
   try {
     await db.update(users).set(user).where(eq(users.id, id));
     revalidatePath("/");
