@@ -8,7 +8,7 @@ This project demonstrates basic user management functionality, including adding 
 A working version of this app is available at https://next-drizzle-crud.vercel.app/
 
 ### Key Dependencies
-- Next 16
+- Next.js 16
 - Neon Serverless Postgres
 - Drizzle
 - React Hook Form
