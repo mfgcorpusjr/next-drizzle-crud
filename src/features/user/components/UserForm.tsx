@@ -11,7 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
-import { createUser } from "@/features/user/actions";
+import { createUser, updateUser } from "@/features/user/actions";
+import { SelectUser } from "@/db/schema";
 
 const formSchema = z.object({
   email: z
@@ -28,17 +29,18 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 type Props = {
+  user?: SelectUser;
   onComplete: () => void;
 };
 
-export default function UserForm({ onComplete }: Props) {
+export default function UserForm({ user, onComplete }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const { control, handleSubmit, reset } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      username: "",
+      email: user?.email ?? "",
+      username: user?.username ?? "",
     },
   });
 
@@ -46,9 +48,13 @@ export default function UserForm({ onComplete }: Props) {
     try {
       setIsLoading(true);
 
-      await createUser(formData);
+      if (user) {
+        await updateUser(user.id, formData);
+      } else {
+        await createUser(formData);
+      }
 
-      toast.success("User created");
+      toast.success(`User ${user ? "updated" : "created"}`);
 
       reset();
     } catch (e) {
@@ -107,7 +113,9 @@ export default function UserForm({ onComplete }: Props) {
         )}
       />
 
-      <Button disabled={isLoading}>{isLoading && <Spinner />} Add</Button>
+      <Button disabled={isLoading}>
+        {isLoading && <Spinner />} {user ? "Update" : "Create"}
+      </Button>
     </form>
   );
 }

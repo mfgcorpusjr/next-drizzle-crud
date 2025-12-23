@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import UpdateUserButton from "@/features/user/components/UpdateUserButton";
 import DeleteUserButton from "@/features/user/components/DeleteUserButton";
 
 import { getUsers } from "@/features/user/actions";
@@ -29,7 +30,8 @@ export default async function UsersTable() {
             <TableCell className="font-medium">{user.email}</TableCell>
             <TableCell>{user.username}</TableCell>
             <TableCell>{user.createdAt?.toLocaleString()}</TableCell>
-            <TableCell className="text-right">
+            <TableCell className="text-right space-x-2">
+              <UpdateUserButton user={user} />
               <DeleteUserButton userId={user.id} />
             </TableCell>
           </TableRow>
