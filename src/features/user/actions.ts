@@ -1,15 +1,25 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { desc } from "drizzle-orm";
 
 import { db } from "@/db/drizzle";
-import { users } from "@/db/schema";
+import { users, InsertUser } from "@/db/schema";
 
 export const getUsers = async () => {
   try {
     const data = await db.select().from(users).orderBy(desc(users.createdAt));
     return data;
   } catch (e) {
-    console.log(e);
+    throw new Error("Failed to get users");
+  }
+};
+
+export const createUser = async (user: InsertUser) => {
+  try {
+    await db.insert(users).values(user);
+    revalidatePath("/");
+  } catch (e) {
+    throw new Error("Failed to create user");
   }
 };
