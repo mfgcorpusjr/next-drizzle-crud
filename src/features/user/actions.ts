@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 import { db } from "@/db/drizzle";
 import { users, InsertUser } from "@/db/schema";
@@ -21,5 +21,14 @@ export const createUser = async (user: InsertUser) => {
     revalidatePath("/");
   } catch (e) {
     throw new Error("Failed to create user");
+  }
+};
+
+export const deleteUser = async (id: string) => {
+  try {
+    await db.delete(users).where(eq(users.id, id));
+    revalidatePath("/");
+  } catch (e) {
+    throw new Error("Failed to delete user");
   }
 };
